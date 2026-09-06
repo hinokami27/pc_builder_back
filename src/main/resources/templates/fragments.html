@@ -1,0 +1,72 @@
+<div id="navbarWrap">
+    <div  th:fragment="navbar" id="navbar">
+        <style>
+            body a{
+                text-decoration: none;
+            }
+            #navbar{
+                position: sticky;
+                top: 0;
+                padding: 20px 0px;
+                background-color: #f1f1f1;
+                display: flex;
+                justify-content: space-evenly;
+                z-index: 1000;
+            }
+            .rescrapeBtn{
+                z-index: 1000;
+            }
+            thead tr{
+                position: sticky;
+                top: 100px;
+                background-color: #f1f1f1;
+                padding: 20px;
+                font-size: 20px;
+            }
+            .navBtn{
+                height: 60px;
+                width: 120px;
+                color: #f1f1f1;
+                background-color: #39117e;
+                text-decoration: none;
+                text-align: center;
+                line-height: 60px;
+                border-radius: 10px;
+            }
+        </style>
+        <a href="/cpu/showall"><div class="navBtn">CPU</div></a>
+        <a href="/cooler/showall"><div class="navBtn">COOLER</div></a>
+        <a href="/motherboard/showall"><div class="navBtn">MOBO</div></a>
+        <a href="/gpu/showall"><div class="navBtn">GPU</div></a>
+        <a href="/ram/showall"><div class="navBtn">RAM</div></a>
+        <a href="/disk/showall"><div class="navBtn">DISK</div></a>
+        <a href="/case/showall"><div class="navBtn">CASE</div></a>
+        <a href="/psu/showall"><div class="navBtn">PSU</div></a>
+    </div>
+</div>
+
+<div th:fragment="datatable-scripts">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script >
+        $(document).ready(function () {
+            let table = $('table').DataTable({
+                paging: false,
+                info: false,
+                searching: false,
+                columnDefs: [
+                    { orderable: false, targets: 0 } // row number column not sortable
+                ]
+            });
+
+            table.on('order.dt search.dt', function () {
+                table.column(0, {search:'applied', order:'applied'}).nodes()
+                    .each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+            }).draw();
+        });
+    </script>
+</div>

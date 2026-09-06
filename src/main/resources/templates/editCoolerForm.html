@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Title</title>
+    <style>
+        #wrap{
+            width: 1000px;
+            height: 1200px;
+            margin: 100px auto 0;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <form method="post" th:action="@{'/cooler/edit'}">
+        <input type="hidden" name="id" th:value="(${cooler} !=null ? ${cooler.getId()} : '')">
+        <div>ModelName</div>
+        <input class="form-control" type="text" name="modelName" th:value="(${cooler} !=null ? ${cooler.getModelName()} : '')"><br>
+        <div>Price</div>
+        <input class="form-control" type="text" name="priceMkd" th:value="(${cooler} !=null ? ${cooler.getPriceMkd()} : '')"><br>
+        <div>StoreName</div>
+        <input class="form-control" type="text" name="storeName" th:value="(${cooler} !=null ? ${cooler.getStoreName()} : '')"><br>
+        <div>StoreUrl</div>
+        <input class="form-control" type="text" name="storeUrl" th:value="(${cooler} !=null ? ${cooler.getStoreUrl()} : '')"><br>
+        <div>ImgUrl</div>
+        <input class="form-control" type="text" name="imgUrl" th:value="(${cooler} !=null ? ${cooler.getImgUrl()} : '')"><br>
+        <div>Sockets</div>
+        <input class="form-control" type="text" name="sockets" th:value="(${cooler} !=null ? ${cooler.getSockets()} : '')"><br>
+        <div>CoolerType</div>
+        <input class="form-control" type="text" name="coolerType" th:value="(${cooler} !=null ? ${cooler.getCoolerType()} : '')"><br>
+        <div>RadiatorSize</div>
+        <input class="form-control" type="text" name="radiatorSize" th:value="(${cooler} !=null ? ${cooler.getRadiatorSize()} : '')"><br>
+        <div>CoolerHeight</div>
+        <input class="form-control" type="text" name="coolerHeight" th:value="(${cooler} !=null ? ${cooler.getCoolerHeight()} : '')"><br>
+        <div>Brand</div>
+        <input class="form-control" type="text" name="brand" th:value="(${cooler} !=null ? ${cooler.getBrand()} : '')"><br>
+        <button class="btn btn-primary btn-lg" type="submit">Edit</button>
+    </form>
+</div>
+</body>
+</html>

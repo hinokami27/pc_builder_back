@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Title</title>
+    <style>
+        #wrap{
+            width: 1000px;
+            height: 1200px;
+            margin: 100px auto 0;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <form method="post" th:action="@{'/disk/edit'}">
+        <input type="hidden" name="id" th:value="(${disk} !=null ? ${disk.getId()} : '')">
+        <div>ModelName</div>
+        <input class="form-control" type="text" name="modelName" th:value="(${disk} !=null ? ${disk.getModelName()} : '')"><br>
+        <div>Price</div>
+        <input class="form-control" type="text" name="priceMkd" th:value="(${disk} !=null ? ${disk.getPriceMkd()} : '')"><br>
+        <div>StoreName</div>
+        <input class="form-control" type="text" name="storeName" th:value="(${disk} !=null ? ${disk.getStoreName()} : '')"><br>
+        <div>StoreUrl</div>
+        <input class="form-control" type="text" name="storeUrl" th:value="(${disk} !=null ? ${disk.getStoreUrl()} : '')"><br>
+        <div>ImgUrl</div>
+        <input class="form-control" type="text" name="imgUrl" th:value="(${disk} !=null ? ${disk.getImgUrl()} : '')"><br>
+        <div>DiskSize</div>
+        <input class="form-control" type="text" name="size" th:value="(${disk} !=null ? ${disk.getSize()} : '')"><br>
+        <div>DiskSpeed</div>
+        <input class="form-control" type="text" name="speed" th:value="(${disk} !=null ? ${disk.getSpeed()} : '')"><br>
+        <div>DiskType</div>
+        <input class="form-control" type="text" name="diskType" th:value="(${disk} !=null ? ${disk.getDiskType()} : '')"><br>
+        <div>Connector</div>
+        <input class="form-control" type="text" name="connector" th:value="(${disk} !=null ? ${disk.getConnector()} : '')"><br>
+        <div>Brand</div>
+        <input class="form-control" type="text" name="brand" th:value="(${disk} !=null ? ${disk.getBrand()} : '')"><br>
+        <button class="btn btn-primary btn-lg" type="submit">Edit</button>
+    </form>
+</div>
+</body>
+</html>

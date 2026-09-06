@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>GPUs</title>
+    <meta name="referrer" content="no-referrer">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <style>
+        img{
+            max-height: 150px;
+            max-width: 150px;
+        }
+        ul{
+            list-style-type: none;
+            padding: 0px;
+        }
+        .rescrapeBtn{
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: #39117e;
+            color: #b6c2cd;
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<a class="rescrapeBtn" href="/gpu/scrape"><div>RE-SCRAPE</div></a>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">StoreName</th>
+        <th scope="col">StoreURL</th>
+        <th scope="col">ImgUrl</th>
+        <th scope="col">Brand</th>
+        <th scope="col">ChipMaker</th>
+        <th scope="col">ModelName</th>
+        <th scope="col">Chipset</th>
+        <th scope="col">Vram</th>
+        <th scope="col">Price</th>
+        <th scope="col">Length</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="gpu : ${gpus}">
+        <td></td>
+        <td th:text="${gpu.getStoreName()}"></td>
+        <td><a th:href="${gpu.getStoreUrl()}">Link</a></td>
+        <td><img th:src="${gpu.getImgUrl()}" th:alt="${gpu.getImgUrl()}"></td>
+        <td th:text="${gpu.getBrand()}"></td>
+        <td th:text="${gpu.getChipMaker()}"></td>
+        <td>
+            <form method="get" th:action="@{'/price/check'}">
+                <input type="hidden" class="btn btn-primary" th:value="${gpu.getStoreUrl()}" name="storeUrl">
+                <button th:text="${gpu.getModelName()}" type="submit" class="btn btn-primary"></button>
+            </form>
+        </td>
+        <td th:text="${gpu.getChipset()}"></td>
+        <td th:text="${gpu.getVram()}"></td>
+        <td th:text="${gpu.getPriceMkd()}"></td>
+        <td th:text="${gpu.getLength()}"></td>
+        <td><a th:href="@{'/gpu/edit-form/{id}' (id=${gpu.getId()})}" class="btn btn-info">Edit</a></td>
+        <td><a th:href="@{'/gpu/delete/{id}' (id=${gpu.getId()})}" class="btn btn-danger">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<div th:replace="~{fragments :: datatable-scripts}"></div>
+</body>
+</html>
