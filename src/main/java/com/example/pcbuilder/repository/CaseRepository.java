@@ -28,4 +28,6 @@ public interface CaseRepository extends JpaRepository<PcCase, Long> {
             @Param("gpuLength") Integer gpuLength,
             @Param("minRank") Integer minRank
     );
+
+    List<PcCase> findTop10ByPriceMkdAfterOrderByPriceMkdAsc(Double minPrice, Double maxPrice);
 }

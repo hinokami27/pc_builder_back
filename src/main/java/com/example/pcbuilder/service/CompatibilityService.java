@@ -1,6 +1,8 @@
 package com.example.pcbuilder.service;
 
 import com.example.pcbuilder.model.*;
+import com.example.pcbuilder.pojo.AiBuildDto;
+import com.example.pcbuilder.pojo.AiBuildResponse;
 import com.example.pcbuilder.pojo.PcBuild;
 import com.example.pcbuilder.pojo.PcBuildDto;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,4 +23,6 @@ public interface CompatibilityService {
     Integer calculateWattage(PcBuild pcBuild);
 
     List<String> compatibilityCheck(PcBuild pcBuild);
+
+    AiBuildDto resolveAiBuild(AiBuildResponse response);
 }

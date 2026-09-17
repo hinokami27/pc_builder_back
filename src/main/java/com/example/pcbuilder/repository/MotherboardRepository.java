@@ -1,11 +1,13 @@
 package com.example.pcbuilder.repository;
 
 import com.example.pcbuilder.model.Motherboard;
+import com.example.pcbuilder.model.PcCase;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -24,4 +26,5 @@ public interface MotherboardRepository extends JpaRepository<Motherboard, Long> 
             "(:ramType IS NULL OR m.ramType = :ramType)")
     List<Motherboard> findCompatibleMotherboards(@Param("socket") String socket, @Param("caserank") Integer caserank, @Param("ramType") String ramType);
 
+    List<Motherboard> findTop10ByPriceMkdAfterOrderByPriceMkdAsc(Double minPrice, Double maxPrice);
 }

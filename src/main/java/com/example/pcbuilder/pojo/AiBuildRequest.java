@@ -4,20 +4,15 @@ package com.example.pcbuilder.pojo;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public record AiBuildRequest(
         @NotNull
-        @DecimalMin("100")
-        BigDecimal budget,
+        @Positive
+        Double budget,
 
         @NotEmpty
-        List<String> games,
-
-        String resolution,
-
-        Integer targetFps
-) {
-}
+        List<String> games
+) {}

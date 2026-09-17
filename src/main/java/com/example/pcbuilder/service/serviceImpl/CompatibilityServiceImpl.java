@@ -1,6 +1,8 @@
 package com.example.pcbuilder.service.serviceImpl;
 
 import com.example.pcbuilder.model.*;
+import com.example.pcbuilder.pojo.AiBuildDto;
+import com.example.pcbuilder.pojo.AiBuildResponse;
 import com.example.pcbuilder.pojo.PcBuild;
 import com.example.pcbuilder.pojo.PcBuildDto;
 import com.example.pcbuilder.repository.*;
@@ -125,8 +127,8 @@ public class CompatibilityServiceImpl implements CompatibilityService {
 
     @Override
     public List<PcCase> getCompatiblePcCases(PcBuild build) {
-        int moborank = 0;
-        if(build.motherboard != null) {
+        Integer moborank = null;
+        if (build.motherboard != null && build.motherboard.getFormFactor() != null) {
             moborank = switch (build.motherboard.getFormFactor().toUpperCase()) {
                 case "EATX" -> 4;
                 case "ATX" -> 3;
@@ -135,11 +137,18 @@ public class CompatibilityServiceImpl implements CompatibilityService {
                 default -> 0;
             };
         }
-        return caseRepository.findCompatibleCases(
-                build.cooler != null ? Integer.parseInt(build.cooler.getCoolerHeight()) : null,
-                build.gpu != null ? build.gpu.getLength() : null,
-                build.motherboard != null ? moborank : null
-        );
+
+        Integer coolerHeight = null;
+        if (build.cooler != null && build.cooler.getCoolerHeight() != null) {
+            String digits = build.cooler.getCoolerHeight().replaceAll("[^0-9]", "");
+            if (!digits.isEmpty()) {
+                coolerHeight = Integer.parseInt(digits);
+            }
+        }
+
+        Integer gpuLength = build.gpu != null ? build.gpu.getLength() : null;
+
+        return caseRepository.findCompatibleCases(coolerHeight, gpuLength, moborank);
     }
 
     @Override
@@ -236,13 +245,16 @@ public class CompatibilityServiceImpl implements CompatibilityService {
                 compatibilityCheck.add("Selected ram sticks are not of the same speed. They will all perform at the speed of the slowest stick.");
             }
         }else{
-            if(pcBuild.motherboard != null) {
-                if (!Objects.equals(pcBuild.rams.get(0).getRamType(), pcBuild.motherboard.getRamType())) {
-                    compatibilityCheck.add("Selected ram is not supported by the motherboard. Choose " + pcBuild.motherboard.getRamType() + " ram.");
+            //TODO CHECK IF RAM NULL
+            if(!pcBuild.rams.isEmpty()){
+                if(pcBuild.motherboard != null) {
+                    if (!Objects.equals(pcBuild.rams.get(0).getRamType(), pcBuild.motherboard.getRamType())) {
+                        compatibilityCheck.add("Selected ram is not supported by the motherboard. Choose " + pcBuild.motherboard.getRamType() + " ram.");
+                    }
                 }
             }
         }
-        if(pcBuild.cooler != null && pcBuild.kase != null && !pcBuild.kase.getCoolerHeight().equals("N/A")) {
+        if(pcBuild.cooler != null && pcBuild.kase != null && !pcBuild.kase.getCoolerHeight().equals("N/A") && !pcBuild.cooler.getCoolerHeight().equals("N/A")) {
             if(pcBuild.cooler.getCoolerType().equals("Air Cooler")){
                 if(Integer.parseInt(pcBuild.cooler.getCoolerHeight()) >= Integer.parseInt(pcBuild.kase.getCoolerHeight())){
                     compatibilityCheck.add("Cooler may not fit inside of the selected case. Please double check the vendor/manufacturer page.");
@@ -261,6 +273,75 @@ public class CompatibilityServiceImpl implements CompatibilityService {
             }
         }
         return compatibilityCheck;
+    }
+
+    @Override
+    public AiBuildDto resolveAiBuild(AiBuildResponse response) {
+        AiBuildDto aiBuildDto = new AiBuildDto();
+        if (!response.possible()) {
+            aiBuildDto.possible = false;
+            aiBuildDto.pcBuild = null;
+            aiBuildDto.price = null;
+            aiBuildDto.reason = null;
+            aiBuildDto.fpsEstimates = null;
+            return aiBuildDto;
+        }
+
+        aiBuildDto.possible = true;
+        PcBuild pcBuild = new PcBuild();
+        Double totalPrice = 0.0;
+
+        pcBuild.cpu = cpuRepository.getReferenceById(response.cpuId());
+        totalPrice += pcBuild.cpu.getPriceMkd();
+
+        if (response.coolerId() != null) {
+            pcBuild.cooler = coolerRepository.getReferenceById(response.coolerId());
+            totalPrice += pcBuild.cooler.getPriceMkd();
+        } else {
+            pcBuild.cooler = null;
+        }
+
+        pcBuild.gpu = gpuRepository.getReferenceById(response.gpuId());
+        totalPrice += pcBuild.gpu.getPriceMkd();
+
+        pcBuild.motherboard = motherboardRepository.getReferenceById(response.motherboardId());
+        totalPrice += pcBuild.motherboard.getPriceMkd();
+
+        pcBuild.rams = response.ramIds()
+                .stream()
+                .map(ramRepository::getReferenceById)
+                .toList();
+
+        for (Ram ram : pcBuild.rams) {
+            totalPrice += ram.getPriceMkd();
+        }
+
+        pcBuild.disks = response.storageIds()
+                .stream()
+                .map(diskRepository::getReferenceById)
+                .toList();
+
+        for (Disk storage : pcBuild.disks) {
+            totalPrice += storage.getPriceMkd();
+        }
+
+        pcBuild.psu = psuRepository.getReferenceById(response.psuId());
+        totalPrice += pcBuild.psu.getPriceMkd();
+
+        pcBuild.kase = caseRepository.getReferenceById(response.caseId());
+        totalPrice += pcBuild.kase.getPriceMkd();
+
+        if(compatibilityCheck(pcBuild).isEmpty()){
+            aiBuildDto.pcBuild = pcBuild;
+            aiBuildDto.price = totalPrice;
+            aiBuildDto.reason = response.reason();
+            aiBuildDto.fpsEstimates = response.fpsEstimates();
+        }else{
+            aiBuildDto.possible = false;
+            aiBuildDto.pcBuild = null;
+            aiBuildDto.price = null;
+        }
+        return aiBuildDto;
     }
 
 

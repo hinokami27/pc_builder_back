@@ -2,6 +2,7 @@ package com.example.pcbuilder.repository;
 
 import com.example.pcbuilder.model.Cooler;
 import com.example.pcbuilder.model.Motherboard;
+import com.example.pcbuilder.model.PcCase;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,5 @@ public interface CoolerRepository extends JpaRepository<Cooler, Long> {
             "(:maxHeight IS NULL OR c.coolerHeight < :maxHeight)")
     List<Cooler> findCompatibleCoolers(@Param("socket") String socket, @Param("maxHeight") Integer maxHeight);
 
+    List<Cooler> findTop10ByPriceMkdAfterOrderByPriceMkdAsc(Double minPrice, Double maxPrice);
 }

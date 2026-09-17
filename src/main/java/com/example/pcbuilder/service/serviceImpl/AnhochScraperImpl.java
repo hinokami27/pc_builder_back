@@ -776,7 +776,7 @@ public class AnhochScraperImpl implements AnhochScraper {
                 }
                 String name = psu.getModelName();
                 String[] splitname = name.split(" ");
-                List<String> brands = List.of("BE Quiet!", "Corsair", "Xilence", "Seasonic", "Deepcool", "Gigabyte", "Matrix", "MSI", "NZXT", "White Shark", "SBOX", "Sharkoon", "Thermaltake");
+                List<String> brands = List.of("BE Quiet!", "Corsair", "Xilence", "Seasonic", "Deepcool", "Genesis", "Gigabyte", "Matrix", "MSI", "NZXT", "White Shark", "SBOX", "Sharkoon", "Thermaltake");
                 List<String> psuWattages = List.of("300W",
                         "400W", "450W", "500W", "550W", "600W",
                         "650W", "700W", "750W", "800W", "850W",
@@ -882,7 +882,8 @@ public class AnhochScraperImpl implements AnhochScraper {
                     brandName.equals("Gigabyte") ||
                     brandName.equals("White Shark") ||
                     brandName.equals("MSI") ||
-                    brandName.equals("NZXT")){
+                    brandName.equals("NZXT") ||
+                    brandName.equals("Genesis")){
                     for(int i=2 ; i < splitname.length; i++){
                         if(splitname[i].startsWith("80")){
                             break;
