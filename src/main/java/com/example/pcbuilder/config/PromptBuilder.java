@@ -1,4 +1,4 @@
-package com.example.pcbuilder.service;
+package com.example.pcbuilder.config;
 
 import com.example.pcbuilder.pojo.AiBuildRequest;
 import com.example.pcbuilder.pojo.CandidateParts;

@@ -4,7 +4,7 @@ package com.example.pcbuilder.config;
 import com.example.pcbuilder.pojo.AiBuildRequest;
 import com.example.pcbuilder.pojo.AiBuildResponse;
 import com.example.pcbuilder.pojo.CandidateParts;
-import com.example.pcbuilder.service.PromptBuilder;
+import com.example.pcbuilder.config.PromptBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,7 +68,7 @@ public class OpenRouterClient {
                         )
                 ),
                 0.1,
-                8000
+                10000
         );
 
         String rawResponse = webClient
