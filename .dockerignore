@@ -1,0 +1,19 @@
+# Build outputs and local tooling
+target/
+.git/
+.gitignore
+.gitattributes
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE and editor files
+.idea/
+.vscode/
+*.iml
+
+# Local H2 database files
+src/main/resources/*.mv.db
+src/main/resources/*.trace.db
+
+# Local environment files
+.env
+.env.*
