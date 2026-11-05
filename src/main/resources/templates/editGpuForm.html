@@ -28,15 +28,15 @@
         <div>ImgUrl</div>
         <input class="form-control" type="text" name="imgUrl" th:value="(${gpu} !=null ? ${gpu.getImgUrl()} : '')"><br>
         <div>VRAM</div>
-        <input class="form-control" type="text" name="packageType" th:value="(${gpu} !=null ? ${gpu.getVram()} : '')"><br>
+        <input class="form-control" type="text" name="vram" th:value="(${gpu} !=null ? ${gpu.getVram()} : '')"><br>
         <div>Brand</div>
         <input class="form-control" type="text" name="brand" th:value="(${gpu} !=null ? ${gpu.getBrand()} : '')"><br>
         <div>Chipset</div>
-        <input class="form-control" type="text" name="ramSpeed" th:value="(${gpu} !=null ? ${gpu.getChipset()} : '')"><br>
+        <input class="form-control" type="text" name="chipset" th:value="(${gpu} !=null ? ${gpu.getChipset()} : '')"><br>
         <div>Chipmaker</div>
-        <input class="form-control" type="text" name="ramType" th:value="(${gpu} !=null ? ${gpu.getChipMaker()} : '')"><br>
+        <input class="form-control" type="text" name="chipMaker" th:value="(${gpu} !=null ? ${gpu.getChipMaker()} : '')"><br>
         <div>Length</div>
-        <input class="form-control" type="text" name="socket" th:value="(${gpu} !=null ? ${gpu.getLength()} : '')"><br>
+        <input class="form-control" type="text" name="length" th:value="(${gpu} !=null ? ${gpu.getLength()} : '')"><br>
         <button class="btn btn-primary btn-lg" type="submit">Edit</button>
     </form>
 </div>

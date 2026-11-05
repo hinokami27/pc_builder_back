@@ -40,18 +40,6 @@ public class AiBuildService {
                         candidates
                 );
 
-        /*
-         * IMPORTANT:
-         *
-         * Never trust the model's totalPrice.
-         * Never trust that its IDs exist.
-         * Never trust that its build is compatible.
-         */
-
-//        compatibilityService.validateAiBuild(
-//                aiResponse,
-//                request.budget()
-//        );
 
         return aiResponse;
     }

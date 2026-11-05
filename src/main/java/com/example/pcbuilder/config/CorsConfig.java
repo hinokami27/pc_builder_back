@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Allow all paths
-                        .allowedOrigins("http://localhost:5173") // Your React app's URL
+                        .allowedOrigins("http://localhost:5173,https://pc-builder-nine-rosy.vercel.app/") // Your React app's URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true); // Explicitly true if you handle cookies/sessions

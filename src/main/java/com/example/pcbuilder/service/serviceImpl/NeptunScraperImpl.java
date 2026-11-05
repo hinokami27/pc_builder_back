@@ -208,8 +208,8 @@ public class NeptunScraperImpl implements NeptunScraper {
                 }
                 if (name.contains("AM4")) cpu.setSocket("AM4");
                 else if (name.contains("AM5")) cpu.setSocket("AM5");
-                else if (name.contains("LGA1700") || name.contains("LGA 1700") || name.toLowerCase().contains("raptor lake")) cpu.setSocket("LGA1700");
-                else if (name.contains("LGA1851")) cpu.setSocket("LGA1851");
+                else if (name.contains("LGA1700") || name.contains("LGA 1700") || name.toLowerCase().contains("raptor lake")) cpu.setSocket("LGA 1700");
+                else if (name.contains("LGA1851")) cpu.setSocket("LGA 1851");
 
                 if(name.toLowerCase().contains("amd")) cpu.setBrand("AMD");
                 else if (name.toLowerCase().contains("intel")) cpu.setBrand("Intel");
@@ -893,7 +893,7 @@ public class NeptunScraperImpl implements NeptunScraper {
                 }
                 String name = psu.getModelName();
                 String[] splitname = name.trim().split(" ");
-                List<String> brands = Arrays.asList("Be Quiet!", "Corsair", "MSI", "NZXT", "Rampage", "White Shark","ASUS","Cougar");
+                List<String> brands = Arrays.asList("Be Quiet!", "Corsair", "MSI", "NZXT", "Rampage", "White Shark","ASUS","Cougar","Seasonic");
                 List<String> ratings = Arrays.asList("80 plus", "bronze", "silver", "gold", "platinum", "titanium");
                 StringBuilder newname = new StringBuilder();
                 for(String brand : brands){
@@ -914,7 +914,7 @@ public class NeptunScraperImpl implements NeptunScraper {
                     }
                     newname.append(word).append(" ");
                 }
-                psu.setModelName(newname.toString().replace("PSU","").trim());
+                psu.setModelName(newname.toString().replace("PSU","").replace("Напојување за компјутер ","").trim());
                 if(name.toLowerCase().contains("80 plus")){
                     psu.setEfficiency("80+");
                 }

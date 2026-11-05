@@ -191,8 +191,8 @@ public class AnhochScraperImpl implements AnhochScraper {
                 }
                 if (name.contains("AM4")) cpu.setSocket("AM4");
                 else if (name.contains("AM5")) cpu.setSocket("AM5");
-                else if (name.contains("LGA1700") || name.contains("LGA 1700") || name.toLowerCase().contains("raptor lake")) cpu.setSocket("LGA1700");
-                else if (name.contains("LGA1851")) cpu.setSocket("LGA1851");
+                else if (name.contains("LGA1700") || name.contains("LGA 1700") || name.toLowerCase().contains("raptor lake")) cpu.setSocket("LGA 1700");
+                else if (name.contains("LGA1851")) cpu.setSocket("LGA 1851");
 
                 if(name.toLowerCase().contains("amd")) cpu.setBrand("AMD");
                 else if (name.toLowerCase().contains("intel")) cpu.setBrand("Intel");

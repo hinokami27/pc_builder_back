@@ -40,6 +40,13 @@ public class AiBuildController {
 
         return compatibilityService.resolveAiBuild(response);
     }
+    @PostMapping("/test")
+    public AiBuildDto testAiResponse(
+            @Valid @RequestBody AiBuildResponse response
+    ) throws JsonProcessingException {
+        
+        return compatibilityService.resolveAiBuild(response);
+    }
 
 //    @PostMapping("/generate")
 //    public AiBuildDto generateBuild(
